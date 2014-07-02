@@ -81,5 +81,5 @@ test:
 production:
   <<: *default
   database: lords_of_books_production
-  username: lords_of_books
-  password: <%= ENV['LORDS_OF_BOOKS_DATABASE_PASSWORD'] %>
+  username:
+  password:
