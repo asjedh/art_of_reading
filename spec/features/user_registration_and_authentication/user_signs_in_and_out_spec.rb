@@ -1,39 +1,34 @@
-# require 'spec_helper'
+require 'spec_helper'
 
-# feature "User signs in through login page"
-#   it 'signs in with valid details' do
-#     user = FactoryGirl.create(:user)
-#     visit new_user_session_path
+feature "User signs in through login page" do
+  it 'signs in with valid details' do
+    user = FactoryGirl.create(:user)
+    sign_in_as(user)
 
-#     fill_in "Email", with: user.email
-#     fill_in "Password", with: user.password
+    expect(page).to have_content "Signed in successfully."
+  end
 
-#     click_on "Sign in"
+  it 'does not sign in with invalid email' do
+    user = FactoryGirl.create(:user)
+    visit new_user_session_path
 
-#     expect(page).to have_content "You have successfully signed in!"
-#   end
+    fill_in "Email", with: "random@gmail.com"
+    fill_in "Password", with: user.password
 
-#   it 'does not sign in with invalid email' do
-#     user = FactoryGirl.create(:user)
-#     visit new_user_session_path
+    click_on "Sign in"
 
-#     fill_in "Email", with: "random@gmail.com"
-#     fill_in "Password", with: user.password
+    expect(page).to have_content "Invalid email or password."
+  end
 
-#     click_on "Sign in"
+  it 'does not sign in with invalid password' do
+    user = FactoryGirl.create(:user)
+    visit new_user_session_path
 
-#     expect(page).to have_content "Invalid details"
-#   end
+    fill_in "Email", with: user.email
+    fill_in "Password", with: "password"
 
-#   it 'does not sign in with invalid password' do
-#     user = FactoryGirl.create(:user)
-#     visit new_user_session_path
+    click_on "Sign in"
 
-#     fill_in "Email", with: user.email
-#     fill_in "Password", with: "password"
-
-#     click_on "Sign in"
-
-#     expect(page).to have_content "Invalid details"
-#   end
-# end
+    expect(page).to have_content "Invalid email or password."
+  end
+end
