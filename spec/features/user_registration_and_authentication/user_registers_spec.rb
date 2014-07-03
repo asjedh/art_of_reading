@@ -1,9 +1,9 @@
-require 'spec_helper'
+require "spec_helper"
 
-feature 'user can register ' do
+feature "user can register" do
   it "creates a new user if correctly inputted" do
     user = FactoryGirl.build(:user)
-    visit "/users/sign_up"
+    visit new_user_registration
 
     fill_in "Email", with: user.email
     fill_in "User name", with: user.user_name
@@ -11,7 +11,7 @@ feature 'user can register ' do
     fill_in "Password", with: user.password
     fill_in "Confirm password", with: user.password
 
-    within('.form-actions') do
+    within(".form-actions") do
       click_on "Sign up"
     end
 
@@ -20,7 +20,7 @@ feature 'user can register ' do
   end
 
   it "does not create a new user if nothing is inputted" do
-    visit "/users/sign_up"
+    visit new_user_registration
 
     within('.form-actions') do
       click_on "Sign up"
@@ -33,15 +33,15 @@ feature 'user can register ' do
 
   it "does not create a new user if password confirmation does not match" do
     user = FactoryGirl.build(:user)
-    visit "/users/sign_up"
+    visit new_user_registration
 
     fill_in "Email", with: user.email
     fill_in "User name", with: user.user_name
 
     fill_in "Password", with: user.password
-    fill_in "Confirm password", with: 'notmatching'
+    fill_in "Confirm password", with: "notmatching"
 
-    within('.form-actions') do
+    within(".form-actions") do
       click_on "Sign up"
     end
 
