@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, uniqueness: true
   validates_presence_of :password_confirmation, message: "can't be blank"
+
+  has_many :books
 end

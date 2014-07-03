@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
   root 'books#index'
+
+  resources :users, only: [] do
+    resources :books, shallow: true
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
