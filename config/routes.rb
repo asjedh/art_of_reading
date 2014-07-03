@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'books#index'
+  root 'books#all_books_index'
 
   resources :users, only: [] do
     resources :books, shallow: true
