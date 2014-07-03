@@ -8,4 +8,7 @@ class BooksController < ApplicationController
   def all_books_index
     @all_books = Book.order("created_at DESC")
   end
+
+  def new
+  end
 end

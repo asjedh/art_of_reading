@@ -1,3 +1,5 @@
+require "spec_helper"
+
 feature "user can view their own books" do
   it "shows all books that user has added" do
     user = FactoryGirl.create(:user)
@@ -25,5 +27,4 @@ feature "user can view their own books" do
 
     expect(page).to have_content("You need to sign in or sign up before continuing.")
   end
-
 end
