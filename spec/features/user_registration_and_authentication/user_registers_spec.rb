@@ -6,7 +6,7 @@ feature "user can register" do
     visit new_user_registration_path
 
     fill_in "Email", with: user.email
-    fill_in "User name", with: user.user_name
+    fill_in "Username", with: user.username
 
     fill_in "Password", with: user.password
     fill_in "Confirm password", with: user.password
@@ -36,7 +36,7 @@ feature "user can register" do
     visit new_user_registration_path
 
     fill_in "Email", with: user.email
-    fill_in "User name", with: user.user_name
+    fill_in "Username", with: user.username
 
     fill_in "Password", with: user.password
     fill_in "Confirm password", with: "notmatching"
@@ -48,5 +48,37 @@ feature "user can register" do
     expect(page).to have_content "doesn't match Password"
     expect(page).to have_content "Sign up"
   end
+
+  it "does not create a new user if email or usersname is already taken is already in databse" do
+    user = FactoryGirl.build(:user)
+    visit new_user_registration_path
+
+    fill_in "Email", with: user.email
+    fill_in "Username", with: user.username
+
+    fill_in "Password", with: user.password
+    fill_in "Confirm password", with: user.password
+
+    within(".form-actions") do
+      click_on "Sign up"
+    end
+
+    click_on "Logout"
+    visit new_user_registration_path
+
+    fill_in "Email", with: user.email
+    fill_in "Username", with: user.username
+
+    fill_in "Password", with: user.password
+    fill_in "Confirm password", with: user.password
+
+    within(".form-actions") do
+      click_on "Sign up"
+    end
+
+    count = page.body.scan("has already been taken").count
+    expect(count).to eq(2)
+  end
+
 
 end
