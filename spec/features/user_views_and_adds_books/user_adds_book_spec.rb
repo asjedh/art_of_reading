@@ -1,6 +1,6 @@
 require "spec_helper"
 
-feature "user can view their own books" do
+feature "user can add books" do
   it "creates book with valid details" do
     user = FactoryGirl.create(:user)
     book = FactoryGirl.build(:book, user: user)
@@ -10,10 +10,9 @@ feature "user can view their own books" do
 
     fill_in "Title", with: book.title
     fill_in "Description", with: book.description
+    click_on "Add Book"
 
-    click_on "Create Book"
-
-    expect(page).to have_content("Success")
+    expect(page).to have_content("Book added!")
     expect(page).to have_content(book.title)
     expect(page).to have_content(book.description)
   end
@@ -24,10 +23,17 @@ feature "user can view their own books" do
 
     sign_in_as(user)
     visit new_user_book_path(user.id)
-
-    click_on "Create Book"
+    click_on "Add Book"
 
     count = page.body.scan("can't be blank").count
     expect(count).to eq(1)
   end
+
+  it "redirects to sign in page if user is not signed in" do
+    user = FactoryGirl.create(:user)
+    visit new_user_book_path(user.id)
+    expect(page).to have_content("You need to sign in or sign up before continuing.")
+  end
+
+
 end
