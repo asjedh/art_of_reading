@@ -2,8 +2,11 @@
 
 FactoryGirl.define do
   factory :chapter do
-    sequence(:title) { |n| "Awesome Book #{n}" }
-    sequence(:description) { |n| "Cool Book #{n}" }
+    sequence(:title) { |n| "Awesome chapter #{n}" }
+    sequence(:summary) { |n| "This was a great book! You should read it. #{n}" }
+    sequence(:tldr) { |n| "Good #{n}" }
+    sequence(:key_concepts) { |n| "Photosynthesis - how plants convert energy #{n}" }
+    sequence(:reflection) { |n| "This changed my life #{n}" }
 
     book
   end

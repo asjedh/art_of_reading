@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20140705233832) do
   add_index "books", ["user_id"], name: "index_books_on_user_id", using: :btree
 
   create_table "chapters", force: true do |t|
-    t.string   "name",         null: false
+    t.string   "title",        null: false
     t.integer  "book_id",      null: false
     t.string   "summary"
     t.string   "tldr"
