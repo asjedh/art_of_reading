@@ -5,4 +5,8 @@ class ChaptersController < ApplicationController
     @book = Book.find(params[:book_id])
     @chapters = @book.chapters
   end
+
+  def show
+    @chapter = Chapter.find(params[:id])
+  end
 end
