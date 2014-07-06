@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20140705233832) do
   create_table "books", force: true do |t|
     t.string   "title",       null: false
     t.integer  "user_id",     null: false
-    t.text     "description", null: false
+    t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

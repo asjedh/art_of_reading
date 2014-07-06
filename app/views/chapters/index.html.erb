@@ -5,3 +5,16 @@
     <li><%= chapter.title %></li>
   <% end %>
 </ul>
+
+<h2>Add a Chapter for <%= @book %></h2>
+
+<%= simple_form_for [@book, @chapter] do |f| %>
+  <div class="form-inputs">
+    <%= f.input :title, required: true, autofocus: true %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, "Add Chapter" %>
+  </div>
+<% end %>
+

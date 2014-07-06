@@ -1,9 +1,9 @@
-<h2>Add a book</h2>
+<h2>Add a Book</h2>
 
 <%= simple_form_for [@user, @book] do |f| %>
   <div class="form-inputs">
     <%= f.input :title, required: true, autofocus: true %>
-    <%= f.input :description, required: false %>
+    <%= f.input :description %>
   </div>
 
   <div class="form-actions">
