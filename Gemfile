@@ -40,7 +40,7 @@ gem 'aws-sdk'
 gem 'foundation-rails'
 gem 'devise'
 gem 'simple_form'
-
+gem 'amazon-ecs'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
