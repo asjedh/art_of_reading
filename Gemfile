@@ -36,6 +36,7 @@ group :development, :test do
   gem 'mailcatcher'
 end
 
+gem 'aws-sdk'
 gem 'foundation-rails'
 gem 'devise'
 gem 'simple_form'
