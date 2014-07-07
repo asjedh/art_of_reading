@@ -14,6 +14,8 @@
   <ol id="nav-bar">
     <% if user_signed_in? %>
       <li>Logged in as <%= current_user.email %>.</li>
+      <li><%= link_to 'Recent Summaries', root_path %> |</li>
+      <li><%= link_to 'Your Books', user_books_path(current_user) %> |</li>
       <li><%= link_to 'Edit profile', edit_user_registration_path %> |</li>
       <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
     <% else %>
