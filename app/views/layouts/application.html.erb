@@ -1,17 +1,21 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>LordsOfBooks</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <title><%= content_for?(:title) ? yield(:title) : "Art of Reading" %></title>
+
+    <%= stylesheet_link_tag    "application" %>
+    <%= javascript_include_tag "vendor/modernizr" %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
   <%= notice if notice %>
   <%= alert if alert %>
 
-  <ol id="nav-bar">
+  <ul id="nav-bar">
     <% if user_signed_in? %>
       <li>Logged in as <%= current_user.email %>.</li>
       <li><%= link_to 'Recent Summaries', root_path %> |</li>
@@ -22,9 +26,9 @@
       <li><%= link_to 'Sign up', new_user_registration_path%> |</li>
       <li><%= link_to 'Login', new_user_session_path%></li>
     <% end %>
-  </ol>
+  </ul>
 
-  <%= yield %>
-
-</body>
+    <%= yield %>
+    <%= javascript_include_tag "application" %>
+  </body>
 </html>
