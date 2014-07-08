@@ -3,6 +3,8 @@
 <%= simple_form_for [@user, @book] do |f| %>
   <div class="form-inputs">
     <%= f.input :title, required: true, autofocus: true %>
+    <%= f.input :authors, required: false %>
+    <%= f.input :genre, required: false, as: :select %>
   </div>
 
   <div class="form-actions">
