@@ -22,7 +22,7 @@ class BooksController < ApplicationController
 
     if @book.save
       flash[:notice] = "Book added!"
-      redirect_to user_books_path
+      redirect_to book_chapters_path(@book)
     else
       flash.now[:notice] = "Book could not be saved. See problems below."
       render :new
