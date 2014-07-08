@@ -6,6 +6,7 @@
     <%= f.simple_fields_for :authors do |authors_form| %>
       <%= authors_form.input :name, label: "Author" %>
     <% end %>
+    <%= f.input :orig_pub_year, required: false, label: "Original Publication Year" %>
   </div>
 
   <div class="form-actions">

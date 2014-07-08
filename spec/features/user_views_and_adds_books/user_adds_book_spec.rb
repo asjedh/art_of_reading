@@ -10,7 +10,7 @@ feature "user can add books" do
 
     fill_in "Title", with: book.title
     fill_in "Author", with: book.authors
-    fill_in "Year", with: book.year
+    fill_in "Year", with: book.orig_pub_year
     click_on "Add Book"
 
     expect(page).to have_content("Book added!")

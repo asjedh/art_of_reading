@@ -10,7 +10,6 @@ feature "user can view their own books" do
 
     books.each do |book|
       expect(page).to have_content(book.title)
-      expect(page).to have_content(book.description)
     end
   end
 
@@ -22,7 +21,6 @@ feature "user can view their own books" do
 
     books.each do |book|
       expect(page).to_not have_content(book.title)
-      expect(page).to_not have_content(book.description)
     end
 
     expect(page).to have_content("You need to sign in or sign up before continuing.")
