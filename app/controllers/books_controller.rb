@@ -13,6 +13,7 @@ class BooksController < ApplicationController
   def new
     @user = current_user
     @book = Book.new
+    @book.authors.build
   end
 
   def create
@@ -21,6 +22,11 @@ class BooksController < ApplicationController
     @book.user = @user
 
     if @book.save
+
+      params[:book][:authors_attributes].each do |number, author_info|
+        author = Author.find_or_create_by(name: author_info['name'])
+        BookAuthor.create(author: author, book: @book)
+      end
       flash[:notice] = "Book added!"
       redirect_to book_chapters_path(@book)
     else
@@ -32,6 +38,6 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :description)
+    params.require(:book).permit(:title) #, authors_attributes: [:id, :name] )
   end
 end

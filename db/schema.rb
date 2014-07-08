@@ -17,7 +17,8 @@ ActiveRecord::Schema.define(version: 20140708152810) do
   enable_extension "plpgsql"
 
   create_table "authors", force: true do |t|
-    t.string "name"
+    t.string  "name",                null: false
+    t.integer "goodreads_author_id"
   end
 
   create_table "book_authors", force: true do |t|
@@ -26,11 +27,11 @@ ActiveRecord::Schema.define(version: 20140708152810) do
   end
 
   create_table "books", force: true do |t|
-    t.string   "title",         null: false
-    t.integer  "user_id",       null: false
+    t.string   "title",             null: false
+    t.integer  "user_id",           null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "goodreads_id"
+    t.integer  "goodreads_book_id"
     t.integer  "orig_pub_year"
   end
 

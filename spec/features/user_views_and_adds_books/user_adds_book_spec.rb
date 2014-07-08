@@ -11,7 +11,6 @@ feature "user can add books" do
     fill_in "Title", with: book.title
     fill_in "Author", with: book.authors
     fill_in "Year", with: book.year
-    select "Fantasy", from: "Genre"
     click_on "Add Book"
 
     expect(page).to have_content("Book added!")
