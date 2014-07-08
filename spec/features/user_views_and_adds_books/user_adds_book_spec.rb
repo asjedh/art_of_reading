@@ -17,19 +17,6 @@ feature "user can add books" do
     expect(page).to have_content("Your Notes for #{book.title}")
   end
 
-  it 'searches for books with goodreads API' do
-    user = FactoryGirl.create(:user)
-
-    sign_in_as(user)
-    visit new_user_book_path(user.id)
-
-    fill_in "Search", with: "Lord of the Rings"
-    click_on "Search"
-
-    expect(page).to have_content("Search Results for \"Lord of the Rings\"")
-    expect(page).to have_content("The Lord of the Rings (The Lord of the Rings, #1-3)")
-    expect(page).to have_content("J.R.R. Tolkien")
-  end
 
   it "does not create book with invalid details" do
     user = FactoryGirl.create(:user)
