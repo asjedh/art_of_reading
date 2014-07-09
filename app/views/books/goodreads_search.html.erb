@@ -1,0 +1,12 @@
+<h3>Did you mean one of these books?</h3>
+
+<ol>
+  <% @results_to_display_on_view.each do |book| %>
+    <li>
+      <%= book[:title] %> by <%= book[:author] %>
+      <%= button_to("This one!", user_goodreads_create_path(current_user),
+      params: { goodreads_book_id: book[:goodreads_book_id] },
+      method: "post", class: 'goodreads-selection-btn')%>
+    </li>
+  <% end %>
+</ol>
