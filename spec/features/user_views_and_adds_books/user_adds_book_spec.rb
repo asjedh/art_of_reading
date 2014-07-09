@@ -14,9 +14,8 @@ feature "user can add books" do
     click_on "Add Book"
 
     expect(page).to have_content("Book added!")
-    expect(page).to have_content("Your Notes for #{book.title}")
+    expect(page).to have_content("Your Notes for \"#{book.title}\"")
   end
-
 
   it "does not create book with invalid details" do
     user = FactoryGirl.create(:user)
@@ -27,7 +26,7 @@ feature "user can add books" do
     click_on "Add Book"
 
     count = page.body.scan("can't be blank").count
-    expect(count).to eq(1)
+    expect(count).to eq(2)
   end
 
 

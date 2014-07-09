@@ -1,5 +1,6 @@
-<h1>Your Notes for <%= @book.title %></h1>
-<% @book.authors.each do |author| %>
+<h3>Your Notes for "<%= @book.title %>"</h3>
+Book Details:</br>
+Authors: <% @book.authors.each do |author| %>
   <%= author.name %>
 <% end %>
 <ul>
@@ -10,7 +11,7 @@
 
 
 
-<h2>Add a Chapter for <%= @book.title %></h2>
+<h5>Add a Chapter for <%= @book.title %></h5>
 
 <%= simple_form_for [@book, @chapter] do |f| %>
   <div class="form-inputs">
