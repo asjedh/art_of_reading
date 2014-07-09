@@ -8,7 +8,7 @@ feature "user can search books to add with Goodreads API books" do
     sign_in_as(user)
     visit new_user_book_path(user.id)
 
-    fill_in "Search", with: "Lord of the Rings"
+    fill_in "Search Books", with: "Lord of the Rings"
     click_on "Search"
 
     expect(page).to have_content("Search Results for \"Lord of the Rings\"")

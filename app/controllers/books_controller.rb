@@ -20,12 +20,7 @@ class BooksController < ApplicationController
     @book = Book.new(book_params)
     @user = current_user
     @book.user = @user
-
-    if params[:book][:authors_attributes]
-      params[:book][:authors_attributes].each do |number, author|
-        add_author(@book, author)
-      end
-    end
+    @book.add_authors_from_author_attributes(params[:book][:authors_attributes])
 
     if @book.save
       flash[:notice] = "Book added!"
@@ -36,13 +31,13 @@ class BooksController < ApplicationController
     end
   end
 
+  def goodreads_search
+    client = Good
+  end
+
   private
 
   def book_params
-    params.require(:book).permit(:title, :year) #, authors_attributes: [:id, :name])
-  end
-
-  def add_author(book, author_hash)
-    book.authors << Author.find_or_initialize_by(name: author_hash['name'])
+    params.require(:book).permit(:title, :year)
   end
 end

@@ -33,6 +33,8 @@ ActiveRecord::Schema.define(version: 20140708152810) do
     t.datetime "updated_at"
     t.integer  "goodreads_book_id"
     t.integer  "orig_pub_year"
+    t.string   "isbn_10"
+    t.string   "isbn_13"
   end
 
   add_index "books", ["user_id"], name: "index_books_on_user_id", using: :btree

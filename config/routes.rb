@@ -11,6 +11,8 @@ Rails.application.routes.draw do
   end
 
   resources :chapters, only: [:show, :edit, :update, :destroy]
+  get 'goodreads_search', to: 'books#goodreads_search'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
