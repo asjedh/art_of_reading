@@ -40,9 +40,15 @@ class BooksController < ApplicationController
   def goodreads_create
     goodreads_client = Goodreads::Client.new
     goodreads_book = goodreads_client.book(params[:goodreads_book_id])
+
     book = create_book_with_book_info(goodreads_book)
 
-    redirect_to book_path(book.id)
+    if book.save
+      redirect_to book_chapters_path(book.id)
+    else
+      flash[:notice] = "Sorry! There was an error."
+      render 'goodreads_search'
+    end
   end
 
   private
@@ -56,7 +62,8 @@ class BooksController < ApplicationController
     book_info_hash = get_book_info_hash(goodreads_book)
     book = Book.new(book_info_hash)
     book.user = current_user
-    book.authors = assign_authors_from_goodreads(goodreads_book)
+    book.authors = create_authors_from_goodreads_book(goodreads_book)
+    book
   end
 
   def get_book_info_hash(goodreads_book)
@@ -68,6 +75,13 @@ class BooksController < ApplicationController
     }
   end
 
+  def create_authors_from_goodreads_book(goodreads_book)
+    authors = []
+    goodreads_book.authors.values.each do |author|
+      authors << Author.new(name: author.name, goodreads_author_id: author.id)
+    end
+    authors
+  end
   #these methods are for when the goodreads search by title, author, or isbn function is used
   def parse_goodreads_search(search)
     books = []
