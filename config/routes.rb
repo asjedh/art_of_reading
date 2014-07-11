@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'books#all_books_index'
+  root "books#all_books_index"
 
   resources :users, only: [] do
     resources :books, only: [:index, :new, :create]
+    post "goodreads_create", to: "books#goodreads_create"
   end
 
   resources :books, only: [:edit, :update, :destroy] do
@@ -11,6 +12,9 @@ Rails.application.routes.draw do
   end
 
   resources :chapters, only: [:show, :edit, :update, :destroy]
+
+  get "goodreads_search", to: "books#goodreads_search"
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -9,12 +9,12 @@ feature "user can add books" do
     visit new_user_book_path(user.id)
 
     fill_in "Title", with: book.title
-    fill_in "Description", with: book.description
+    fill_in "Author", with: book.authors
+    fill_in "Year", with: book.orig_pub_year
     click_on "Add Book"
 
     expect(page).to have_content("Book added!")
-    expect(page).to have_content(book.title)
-    expect(page).to have_content(book.description)
+    expect(page).to have_content("Your Notes for \"#{book.title}\"")
   end
 
   it "does not create book with invalid details" do
@@ -26,8 +26,9 @@ feature "user can add books" do
     click_on "Add Book"
 
     count = page.body.scan("can't be blank").count
-    expect(count).to eq(1)
+    expect(count).to eq(2)
   end
+
 
   it "redirects to sign in page if user is not signed in" do
     user = FactoryGirl.create(:user)

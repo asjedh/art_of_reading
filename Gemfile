@@ -36,11 +36,13 @@ group :development, :test do
   gem 'mailcatcher'
 end
 
+gem 'asin'
 gem 'aws-sdk'
 gem 'foundation-rails'
 gem 'devise'
 gem 'simple_form'
 gem 'amazon-ecs'
+gem 'goodreads'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
