@@ -10,6 +10,7 @@ feature 'user is able to find search box' do
 
   visit root_path
   fill_in "search", with: book.title
+  choose "Title"
   click_on "Search"
 
   expect(page).to have_content(book.title)
@@ -34,7 +35,7 @@ feature 'user is able to find search box' do
     expect(page).to_not have_content(other_not_matching_book.title)
   end
 
-  it 'shows a list of relevant books when a user searches with ISBN' do
+  it 'shows a list of relevant books when a user searches with author' do
     author = FactoryGirl.create(:author)
     books = FactoryGirl.create_list(:book, 10)
     books.each { |book| book.authors << author }

@@ -1,13 +1,22 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:all_books_index]
 
+  def all_books_index
+    if params[:search]
+      if params[:search_type] == "title"
+        Book.where("title ILIKE ?", "%#{params[:search_type]}%")
+      elsif params[:search_type] == "isbn"
+
+      elsif params[:search_type] == "author"
+      end
+    else
+      @all_books = Book.order("created_at DESC")
+    end
+  end
+
   def index
     @user = current_user
     @books = @user.books
-  end
-
-  def all_books_index
-    @all_books = Book.order("created_at DESC")
   end
 
   def new
@@ -29,6 +38,8 @@ class BooksController < ApplicationController
       render :new
     end
   end
+
+### GOODREADS METHODS
 
   def goodreads_search
     goodreads_client = Goodreads::Client.new
@@ -53,7 +64,7 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :year)
+    params.require(:book).permit(:title, :publication_year)
   end
 
   #these methods are used when user adds book manually

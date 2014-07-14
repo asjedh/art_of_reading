@@ -27,6 +27,18 @@
       <li><%= link_to 'Sign up', new_user_registration_path%> |</li>
       <li><%= link_to 'Login', new_user_session_path%></li>
     <% end %>
+    <li class="search">
+      <%= form_tag(root_path, method: "get", id: 'search-form') do %>
+        <%= text_field_tag :search, params[:search], placeholder: 'Search Summaries' %>
+        <%= radio_button_tag(:search_type, "title", checked = true) %>
+        <%= label_tag(:search_type_title, "Title") %>
+        <%= radio_button_tag(:search_type, "author") %>
+        <%= label_tag(:search_type_author, "Author") %>
+        <%= radio_button_tag(:search_type, 'isbn') %>
+        <%= label_tag(:search_type_isbn, "ISBN") %>
+        <%= submit_tag "Search", name: nil %></li>
+      <% end %>
+    </li>
   </ul>
 
     <%= yield %>
