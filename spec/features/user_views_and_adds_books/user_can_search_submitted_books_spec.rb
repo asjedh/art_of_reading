@@ -20,9 +20,8 @@ feature 'user is able to find search box' do
 
   it 'shows relevant books when a user searches with ISBN' do
     book = FactoryGirl.create(:book, isbn_10: "1111111111")
-    matching_book = FactoryGirl.create(:book, isbn_13: "1111111111111")
-    not_matching_book = FactoryGirl.create(:book, isbn_10: "2222222222")
-    other_not_matching_book = FactoryGirl.create(:book, isbn_13: "2222222222222")
+    not_matching_book1 = FactoryGirl.create(:book, isbn_13: "1111111111111")
+    not_matching_book2 = FactoryGirl.create(:book, isbn_10: "2222222222")
 
     visit root_path
     fill_in "search", with: book.isbn_10
@@ -30,9 +29,8 @@ feature 'user is able to find search box' do
     click_on "Search"
 
     expect(page).to have_content(book.title)
-    expect(page).to have_content(matching_book.title)
-    expect(page).to_not have_content(not_matching_book.title)
-    expect(page).to_not have_content(other_not_matching_book.title)
+    expect(page).to_not have_content(not_matching_book1.title)
+    expect(page).to_not have_content(not_matching_book2.title)
   end
 
   it 'shows a list of relevant books when a user searches with author' do
@@ -49,7 +47,6 @@ feature 'user is able to find search box' do
     books.each do |book|
       expect(page).to have_content(book.title)
     end
-
     expect(page).to_not have_content(not_matching_book.title)
   end
 

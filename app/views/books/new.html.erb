@@ -3,7 +3,7 @@
 <h4>Search for a book with the title, author, or ISBN (recommended).</h4>
 <p>Powered by Goodreads</p>
 <%= form_tag({controller: "books", action: 'goodreads_search'}, method: "get", id: 'goodreads-search-form') do %>
-  <%= text_field_tag :search, params[:search], placeholder: 'Search Books' %>
+  <%= text_field_tag :search, params[:search], placeholder: 'Find your book' %>
   <%= submit_tag 'Search', name: nil %>
 <% end %>
 

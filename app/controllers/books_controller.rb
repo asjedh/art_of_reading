@@ -4,10 +4,16 @@ class BooksController < ApplicationController
   def all_books_index
     if params[:search]
       if params[:search_type] == "title"
-        Book.where("title ILIKE ?", "%#{params[:search_type]}%")
+        @all_books = Book.where("title ILIKE ?", "%#{params[:search]}%")
       elsif params[:search_type] == "isbn"
-
+        @all_books = Book.where("isbn_10 LIKE ? OR isbn_13 LIKE ?",
+          params[:search], params[:search])
       elsif params[:search_type] == "author"
+        @all_books = []
+        authors = Author.where("name ILIKE ?", "%#{params[:search]}%")
+        authors.each do |author|
+          author.books.each { |book| @all_books << book }
+        end
       end
     else
       @all_books = Book.order("created_at DESC")
