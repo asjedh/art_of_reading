@@ -1,26 +1,40 @@
 class BooksController < ApplicationController
   before_action :authenticate_user!, except: [:all_books_index]
 
+  def all_books_index
+    if params[:search]
+      if params[:search_type] == "title"
+        @all_books = Book.where("title ILIKE ?", "%#{params[:search]}%")
+      elsif params[:search_type] == "isbn"
+        @all_books = Book.where("isbn_10 LIKE ? OR isbn_13 LIKE ?",
+          params[:search], params[:search])
+      elsif params[:search_type] == "author"
+        @all_books = []
+        authors = Author.where("name ILIKE ?", "%#{params[:search]}%")
+        authors.each do |author|
+          author.books.each { |book| @all_books << book }
+        end
+      end
+    else
+      @all_books = Book.order("created_at DESC")
+    end
+  end
+
   def index
     @user = current_user
     @books = @user.books
   end
 
-  def all_books_index
-    @all_books = Book.order("created_at DESC")
-  end
-
   def new
     @user = current_user
     @book = Book.new
-    @book.authors.build
   end
 
   def create
     @book = Book.new(book_params)
     @user = current_user
     @book.user = @user
-    @book.add_authors_from_author_attributes(params[:book][:authors_attributes])
+    add_authors_from_author_attributes(@book, params[:book][:authors_attributes])
 
     if @book.save
       flash[:notice] = "Book added!"
@@ -30,6 +44,8 @@ class BooksController < ApplicationController
       render :new
     end
   end
+
+### GOODREADS METHODS
 
   def goodreads_search
     goodreads_client = Goodreads::Client.new
@@ -54,7 +70,18 @@ class BooksController < ApplicationController
   private
 
   def book_params
-    params.require(:book).permit(:title, :year)
+    params.require(:book).permit(:title, :publication_year)
+  end
+
+  #these methods are used when user adds book manually
+  def add_authors_from_author_attributes(book, author_attr_hash)
+    author_attr_hash.each do |number, author|
+      add_author(book, author)
+    end
+  end
+
+  def add_author(book, author_info)
+    book.authors << Author.find_or_initialize_by(name: author_info['name'])
   end
 
   #these methods are for when the goodreads search by id is used
@@ -78,14 +105,17 @@ class BooksController < ApplicationController
   def create_authors_from_goodreads_book(goodreads_book)
     authors = []
     goodreads_book.authors.values.each do |author|
-      authors << Author.new(name: author.name, goodreads_author_id: author.id)
+      author_to_add = Author.find_or_initialize_by(goodreads_author_id: author.id)
+      author_to_add.name = author.name
+      authors << author_to_add
     end
     authors
   end
+
+
   #these methods are for when the goodreads search by title, author, or isbn function is used
   def parse_goodreads_search(search)
     books = []
-
     search.results.work.each do |book|
       books << get_book_info_from_search(book)
     end

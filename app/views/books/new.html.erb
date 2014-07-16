@@ -1,11 +1,9 @@
 <h3>Add a Book</h3>
 
-
-
 <h4>Search for a book with the title, author, or ISBN (recommended).</h4>
 <p>Powered by Goodreads</p>
 <%= form_tag({controller: "books", action: 'goodreads_search'}, method: "get", id: 'goodreads-search-form') do %>
-  <%= text_field_tag :search, params[:search], placeholder: 'Search Books' %>
+  <%= text_field_tag :search, params[:search], placeholder: 'Find your book' %>
   <%= submit_tag 'Search', name: nil %>
 <% end %>
 
@@ -15,10 +13,10 @@
 <%= simple_form_for [@user, @book] do |f| %>
   <div class="form-inputs">
     <%= f.input :title, required: true, autofocus: true %>
-    <%= f.simple_fields_for :authors do |authors| %>
-      <%= authors.input :name, label: "Author" %>
+    <%= f.simple_fields_for :authors, @book.authors.build do |authors| %>
+      <%= authors.input :name, label: "Author", required: false %>
     <% end %>
-    <%= f.input :orig_pub_year, required: false, label: "Original Publication Year" %>
+    <%= f.input :publication_year, required: false, label: "Original Publication Year" %>
   </div>
 
   <div class="form-actions">

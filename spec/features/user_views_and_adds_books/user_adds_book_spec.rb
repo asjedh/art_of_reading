@@ -10,7 +10,7 @@ feature "user can add books" do
 
     fill_in "Title", with: book.title
     fill_in "Author", with: book.authors
-    fill_in "Year", with: book.orig_pub_year
+    fill_in "Year", with: book.publication_year
     click_on "Add Book"
 
     expect(page).to have_content("Book added!")
@@ -26,7 +26,7 @@ feature "user can add books" do
     click_on "Add Book"
 
     count = page.body.scan("can't be blank").count
-    expect(count).to eq(2)
+    expect(count).to eq(1)
   end
 
 
