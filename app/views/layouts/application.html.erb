@@ -23,11 +23,15 @@
     <section class="top-bar-section">
       <ul class="right">
         <% if user_signed_in? %>
-          <li class="logged-in-line"><div>Logged in as <%= current_user.email %></div></li>
-          <li><%= link_to 'Your Books', user_books_path(current_user) %></li>
-          <li><%= link_to 'Add a Book', new_user_book_path(current_user) %></li>
-          <li><%= link_to 'Edit profile', edit_user_registration_path %></li>
-          <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+          <li class="has-dropdown">
+            <a data-dropdown="hover1" data-options="is_hover:true"><%= current_user.email %></a>
+            <ul id="hover1" class="f-dropdown" data-dropdown-content>
+              <li><%= link_to 'Your Books', user_books_path(current_user) %></li></br>
+              <li><%= link_to 'Add a Book', new_user_book_path(current_user) %></li></br>
+              <li><%= link_to 'Edit profile', edit_user_registration_path %></li></br>
+              <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li></br>
+            </ul>
+          </li>
         <% else %>
           <li><%= link_to 'Sign up', new_user_registration_path%></li>
           <li><%= link_to 'Login', new_user_session_path%></li>
